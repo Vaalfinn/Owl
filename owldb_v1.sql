@@ -1,25 +1,26 @@
-CREATE DATABASE IF NOT EXISTS owldb;
-USE owldb;
+CREATE DATABASE IF NOT EXISTS owldb_v1;
+USE owldb_v1;
 
 -- Tabla Usuarios 1
 CREATE TABLE Usuarios (
   id_usuario INT PRIMARY KEY auto_increment,
   nom_usuario VARCHAR(45),
+  nombre VARCHAR(45), 
   ap_paterno VARCHAR(45),
   ap_materno VARCHAR(45),
   correo VARCHAR(45),
-  contrasena VARCHAR(45)
+  passw VARCHAR(45)
 );
 
 -- Tabla Paciente 2
 CREATE TABLE Paciente (
   id_paciente INT PRIMARY KEY auto_increment,
-  registro_online BOOL,
+  registro_online VARCHAR(2), 
   id_usuario INT,
   nombre_cliente VARCHAR(45),
   ap_pa VARCHAR(45),
   ap_ma VARCHAR(45),
-  fecha_nacimiento DATE,
+  fecha_nacimiento DATE, -- Calcular si es mayor de edad xd
   genero VARCHAR(3),
   estado_civil VARCHAR(3),
   antecedentes_medicos VARCHAR(255),
@@ -56,6 +57,7 @@ CREATE TABLE Citas (
   nom_paciente VARCHAR(45),
   id_profesional INT,
   id_horario VARCHAR(3),
+  sede VARCHAR(45),
   FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario),
   FOREIGN KEY (id_paciente) REFERENCES Paciente(id_paciente),
   FOREIGN KEY (id_profesional) REFERENCES Profesional_encargado(id_pro),
@@ -73,6 +75,6 @@ CREATE TABLE Historial_citas (
 CREATE TABLE Contacto_emergencia(
    nombre_contacto VARCHAR(45),
    relacion_paciente VARCHAR(45),
-   num_tel int(9)
+   num_tel int(10)
 ); 
 
