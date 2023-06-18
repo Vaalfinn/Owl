@@ -22,6 +22,11 @@ def home():
         return render_template('index.html')
     return render_template('index.html')
 
+# Reder tempalate a login
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
 # Uso de prueba para la conexión de la base de datos
 @app.route('/prueba1', methods=['GET','POST'])
 def prueba1(): 
@@ -30,13 +35,13 @@ def prueba1():
         aux_nom_usuario = request.form['nom_usuario']
         aux_nombre = request.form['nombre']
         aux_ap_paterno = request.form['ap_paterno']
-        aux_ap_materno = request.form['ap_paterno']
+        aux_ap_materno = request.form['ap_materno']
         aux_correo = request.form['correo']
         aux_passw = request.form['passw']
         
         conn = pymysql.connect(host='localhost', user='root', passwd='', db='owldb_v1' )
         cursor = conn.cursor()
-        
+                
         cursor.execute('insert into usuarios '
                     ' (nom_usuario, nombre, ap_paterno, ap_materno, correo, passw) '
                     ' VALUES (%s, %s, %s, %s, %s, %s) ', 
@@ -48,14 +53,16 @@ def prueba1():
 
 
 # confirmar funcionamiento 
-@app.route("/jalo")
-def func():
+#@app.route('/jalo/<string:id>', methods=['GET'])
+app.route('/jalo')
+def jalo():
+    #conn = pymysql.connect(host='localhost', user='root', passwd='', db='owldb_v1' )
+    #cursor = conn.cursor()
+    #cursor('select count(*) from usuarios from id_usuario ={0}'.format(id))
+    #aver=cursor.fetchall()
     return render_template('jalo.html')
     
-# Reder tempalate a login
-@app.route('/login')
-def login():
-    return render_template('login.html')
+
 
 # fin del programa
 if __name__ == '__main__':

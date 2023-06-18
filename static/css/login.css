@@ -104,6 +104,15 @@ input {
 	height: 100%;
 	transition: all 0.6s ease-in-out;
 }
+.form-row input{
+	width: calc(50% - 10px);
+	margin-right: 10px;
+}
+
+.horz-form{
+    display: flex;
+   
+}
 
 .sign-in-container {
 	left: 0;
@@ -213,14 +222,22 @@ input {
 }
 
 .social-container a {
-	border: 1px solid #DDDDDD;
-	border-radius: 50%;
+	border: 1px solid #3c97bf;
+	border-radius: 50%;	
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
 	margin: 0 5px;
 	height: 40px;
 	width: 40px;
+}
+
+.home {
+	background-image: url("/static/img/Anny_pet_0.1.png");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
+	color: #3c97bf;
 }
 
 footer {
