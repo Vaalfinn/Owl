@@ -1,12 +1,15 @@
 # Se importan los frameworks 
 from flask import Flask, g, render_template, request, redirect, url_for, session, json, jsonify
-import pymysql
+#from flask login
 from flask_mysqldb import MySQL,MySQLdb
+import pymysql
 
 # Nombre de la aplicación para la ejecución 
 app = Flask(__name__)
+
 # sesion
 app.secret_key = 'mysecretkey'
+
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
@@ -21,6 +24,7 @@ def home():
         #
         return render_template('index.html')
     return render_template('index.html')
+
 
 
 # Uso de prueba para la conexión de la base de datos
@@ -65,7 +69,7 @@ def singup():
         conn.close()
     return render_template('singup.html')
 
-# Funcion login 
+
 @app.route('/login', methods=['GET','POST'])
 def login():
     session.pop('id_usuario', None)
@@ -81,26 +85,46 @@ def login():
         usuario=cursor.fetchone()        
         if (usuario==None):
             #en caso de error
+            conn.close()
             error="usuario y/o contraseña no son conrrectos"
             return render_template("error_usuario.html", des_error=error, paginaant='/login')
         else:
             #en caso de que jale 
-            session['id_usuario']=usuario[0]
-            return render_template('index.html')       
+            session['id_usuario']=usuario[0]        
+            return render_template('index.html')
+        
     return render_template('login.html')
 
 
+# Módulo de pacientes 
+@app.route('/pacientes', methods=['GET', 'POST'])
+def pacientes():
+    conn = pymysql.connect(host='localhost', user='root', passwd='', db='owldb_v1')
+    cursor = conn.cursor()
+    cursor.execute=('select nombre_cliente, ap_pa, ap_ma, fecha_nacimiento, genero from Paciente order by Paciente')
+    #datos = cursor.fetchall()
+    conn.close()
+    return render_template('prueba1.html')#, paciente=datos)
 
-# confirmar funcionamiento 
-#@app.route('/jalo/<string:id>', methods=['GET'])
-app.route('/jalo')
-def jalo():
-    #conn = pymysql.connect(host='localhost', user='root', passwd='', db='owldb_v1' )
-    #cursor = conn.cursor()
-    #cursor('select count(*) from usuarios from id_usuario ={0}'.format(id))
-    #aver=cursor.fetchall()
-    return render_template('jalo.html')
-    
+
+
+
+@app.route('/agr_pacientes/', methods=['GET', 'POST'])
+def agr_pacientes():
+    if request.method=='POST':
+        nombre_paciente = request.form['nom_cliente']
+        ap_pa = request.form['ap_pa']
+        ap_ma = request.form['ap_ma']
+        fecha_nacimiento = request.form['fecha_nacimiento']
+        genero = request.form['genero']
+        
+        
+        conn = pymysql.connect(host='localhost', user='root', passwd='', db='owldb_v1')
+        cursor = conn.cursor('insert into Paciente (nom_cliente,)')
+        datos = cursor.fetchall();
+        print(datos)
+    return render_template('pureba1.html')
+
 
 
 # fin del programa
